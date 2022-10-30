@@ -1,0 +1,16 @@
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.csproj.AssemblyReference.cache
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.GeneratedMSBuildEditorConfig.editorconfig
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.AssemblyInfoInputs.cache
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.AssemblyInfo.cs
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.csproj.CoreCompileInputs.cache
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.exe
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.deps.json
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.runtimeconfig.json
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.runtimeconfig.dev.json
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.dll
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\ref\AutoBattle.dll
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\bin\Debug\net5.0\AutoBattle.pdb
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.dll
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\ref\AutoBattle.dll
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.pdb
+C:\Unity Projects\Dev_test_csharp\AutoBattle\AutoBattle\obj\Debug\net5.0\AutoBattle.genruntimeconfig.cache
