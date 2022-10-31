@@ -5,10 +5,10 @@
         public int y;
         public int x;
             
-        public Point(int y, int x)
+        public Point(int x, int y)
         {
-            this.y = y;
             this.x = x;
+            this.y = y;
         }
 
         public static bool operator == (Point lhs, Point rhs)
@@ -19,6 +19,11 @@
         public static bool operator !=(Point lhs, Point rhs)
         {
             return !(lhs == rhs);
+        }
+        
+        public static Point operator +(Point lhs, Point rhs)
+        {
+            return new Point(lhs.x + rhs.x, lhs.y + rhs.y);
         }
 
         public override bool Equals(object obj)

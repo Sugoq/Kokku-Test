@@ -11,8 +11,8 @@
             health = 20,
             baseDamage = 6,
             damageMultiplier = 1.3f,
-            pushingChance = 25,
-            pushingDamage = 6
+            pushChance = 0.2,
+            pushDamage = 5
         };
 
         public static Character enemy = new Character
@@ -21,8 +21,8 @@
             health = 20,
             baseDamage = 5,
             damageMultiplier = 1.3f,
-            pushingChance = 100,
-            pushingDamage = 10
+            pushChance = 0.4,
+            pushDamage = 10
         };
     }
 }

@@ -18,25 +18,27 @@ namespace AutoBattle
 
         public void DrawBattlefield()
         {
-            for (int i = 0; i < height; i++)
+            for (int i = height - 1; i >= 0; i--)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    Point position = new Point(i, j);
-                    
-                        if(playerCharacter.position == position || enemyCharacter.position == position)
-                        {
-                            Console.Write("[X]\t");
-                            goto EndLoop;
-                        }
-                                           
-                    Console.Write("[ ]\t");
+                    if (j == 0) Console.Write("|");
+                    Point position = new Point(j, i);
+                    if(playerCharacter.position == position || enemyCharacter.position == position)                    
+                    {
+                        char c = playerCharacter.position == position ? 'K' : enemyCharacter.name.Substring(0,1).ToUpper()[0];
+                        Console.Write($"{c}");
+                        if (j == width - 1) Console.Write("|");
+                        goto EndLoop;
+                    }                                         
+                    Console.Write(" ");
+                    if (j == width - 1) Console.Write("|");
                     EndLoop:
                     continue;
                 }
-                Console.Write(Environment.NewLine + Environment.NewLine);
+                Console.Write(Environment.NewLine);
             }
-            Console.Write(Environment.NewLine + Environment.NewLine);
+            //Console.Write(Environment.NewLine + Environment.NewLine);
         }
 
         public Point GetRandomPoint()
@@ -61,8 +63,8 @@ namespace AutoBattle
             //enemyCharacter.position = GetRandomPoint();
             
             //Comment the next two lines if you want to use random spawn positions
-            playerCharacter.position = new Point(0, width - 1);
-            enemyCharacter.position = new Point(height -1, 0);
+            playerCharacter.position = new Point(0, height - 1);
+            enemyCharacter.position = new Point(width - 1, 0);
             
             if(playerCharacter.position == enemyCharacter.position)
             {

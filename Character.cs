@@ -1,19 +1,20 @@
 ﻿using System;
 namespace AutoBattle
 {
+    using Direction = Point;
+    
     public class Character
     {
         public string name;
         public float health;
         public float baseDamage;
         public float damageMultiplier;
-        public int pushingChance;
-        public float pushingDamage;
+        public Double pushChance;
+        public float pushDamage;
         public Point position;
         public Character target;
         public bool isAlive = true;
-        Point pushingDirection;
- 
+
         public void Die()
         {
             position = new Point(-5, -5);
@@ -21,100 +22,69 @@ namespace AutoBattle
 
         public void OnCharacterTurn()
         {                   
-            Move();                               
+            MakeTurn();                               
         }
 
-        void Move()
+        void MakeTurn()
         {
             int diffX = (target.position.x - position.x);
             int diffY = (target.position.y - position.y);
+            Direction moveDirection = new Direction(0, 0);
 
+            if (Math.Abs(diffX) + Math.Abs(diffY) == 1)
+            {
+                Direction pushDirection = new Direction(diffX, diffY);
+                Attack(pushDirection);
+            }
+           
+            else if(diffX == 0)
+                moveDirection = new Direction(0, diffY/Math.Abs(diffY));
+       
+            else if(diffY == 0)
+                moveDirection = new Direction(diffX / Math.Abs(diffX), 0);
+                       
+            else if(Math.Abs(diffX) < Math.Abs(diffY))
+                moveDirection = new Direction(diffX / Math.Abs(diffX), 0);
 
-            if (Math.Abs(diffX) <= 1 && Math.Abs(diffY) <= 1)
+            else            
+                moveDirection = new Direction(0, diffY / Math.Abs(diffY));            
+            
+            if(moveDirection.x != 0 || moveDirection.y != 0)
             {
-                Console.WriteLine("In Combat");                 
-                
-                pushingDirection = target.position;
-                //Getting Direction to push
-                if (diffY == 0)
-                {
-                    if (target.position.x > 0 && target.position.x < GameInfo.width - 1)
-                        pushingDirection.x = diffX > 0 ? ++pushingDirection.x : --pushingDirection.x;                                      
-                }
-                else if (diffX == 0)
-                {
-                    Console.WriteLine(target.position.y);
-                    if (target.position.y > 0 && target.position.y < GameInfo.height - 1)                   
-                        pushingDirection.y = diffY > 0 ? ++pushingDirection.y : --pushingDirection.y;                                         
-                }
-                Attack();
+                position += moveDirection;
+                if (moveDirection.x < 0) Console.WriteLine($"{name} moves left");
+                else if(moveDirection.x > 0) Console.WriteLine($"{name} moves right");
+                else if (moveDirection.y > 0) Console.WriteLine($"{name} moves up");
+                else Console.WriteLine($"{name} moves down");
             }
-            else if (diffX == diffY)
-            {
-                position.y = diffY > 0 ? ++position.y : --position.y;
-                string moveDir = diffY > 0 ? $"{name} moves right" : $"{name} moves left";
-                Console.WriteLine(moveDir);
-            }
-            else if (Math.Abs(diffX) < Math.Abs(diffY))
-            {
-                if (diffX == 0)
-                {
-                    position.y = diffY > 0 ? ++position.y : --position.y;
-                    string moveDir = diffY > 0 ? $"{name} moves down" : $"{name} moves up";
-                    Console.WriteLine(moveDir);
-                    return;
-                }
-                position.x = diffX > 0 ? ++position.x : --position.x;
-                string moveDirection = diffX > 0 ? $"{name} moves right" : $"{name} moves left";
-                Console.WriteLine(moveDirection);
-            }
-            else
-            {
-                if (diffY == 0)
-                {
-                    position.x = diffX > 0 ? ++position.x : --position.x;
-                    string moveDirection = diffX > 0 ? $"{name} moves right" : $"{name} moves left";
-                    Console.WriteLine(moveDirection);
-                    return;
-                }
-                position.y = diffY > 0 ? ++position.y : --position.y;
-                string moveDir = diffY > 0 ? $"{name} moves down" : $"{name} moves up";
-                Console.WriteLine(moveDir);
-            }           
         }
 
-        public void Attack()
+        public void Attack(Direction direction)
         {
+            float initialTargetHealth = target.health;
+            Console.WriteLine("In Combat");
             float attackDamage = baseDamage * damageMultiplier;
-            Console.WriteLine($"{name} attacks {target.name} and deals {attackDamage} of damage!");
             target.health -= attackDamage;
-            Console.WriteLine($"{target.name} health: {target.health}");           
-            
-            if (TryToPush())
-                PushEnemy();
-            if (target.health <= 0)
-                target.isAlive = false;                       
+            if (TryToPush()) PushEnemy(direction);
+            Console.WriteLine($"{name} attacks {target.name} and deals {initialTargetHealth - target.health} of damage!");
+            Console.WriteLine($"{target.name} health: {target.health}");
+            target.isAlive = target.health > 0;   
         }
         
-        void PushEnemy()
+        void PushEnemy(Direction direction)
         {
-            target.health -= pushingDamage;
-            Console.WriteLine($"{name} pushes {target.name} and deals {pushingDamage} of damage!");
-            Console.WriteLine($"{target.name} health: {target.health}");
-            target.position = pushingDirection;
-            if (target.health <= 0)
-                target.isAlive = false;
+            target.health -= pushDamage;
+            target.position += direction;
+            target.position.x = Math.Clamp(target.position.x, 0, GameInfo.width - 1);
+            target.position.y = Math.Clamp(target.position.y, 0, GameInfo.height - 1);
         }
 
         bool TryToPush()
-        {
-            var random = new Random();
-            int result = random.Next(0, 100);
-            Console.WriteLine($"{name} is trying to push {target.name}!");
-            if (result <= pushingChance)
-                return true;
-            Console.WriteLine($"{name} couldn't make it!");
-            return false;
+        { 
+            bool push = new Random().NextDouble() < pushChance;
+            if(push)Console.WriteLine($"{name}'s attack pushes {target.name}!");
+            else Console.WriteLine($"{name} failed to push {target.name}!");
+            return push;
         }
     }
 }
