@@ -17,7 +17,7 @@ namespace AutoBattle
 
         void Die()
         {
-            position = new Point(-5, -5);
+            position = Point.infinity;
         }
 
         public void OnCharacterTurn()

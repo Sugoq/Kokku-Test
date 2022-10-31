@@ -2,8 +2,8 @@
 {
     public struct Point
     {
-        public int y;
         public int x;
+        public int y;
             
         public Point(int x, int y)
         {
@@ -39,5 +39,7 @@
             hash = hash * 23 + y.GetHashCode();
             return hash;
         }
+
+        public static readonly Point infinity = new Point(-10000, -10000);
     }
 }
