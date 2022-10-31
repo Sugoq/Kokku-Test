@@ -28,9 +28,8 @@ namespace AutoBattle
                 HandleTurn(currentCharacter);
                 grid.DrawBattlefield();
                 
-                if(nextCharacter.health <= 0)
+                if(!nextCharacter.isAlive)
                 {
-                    nextCharacter.Die();
                     Console.WriteLine($"Battle is over!");
                     Console.WriteLine($"The winner is: {currentCharacter.name}");
                     Console.WriteLine("Click on any key to close the game");

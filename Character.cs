@@ -15,7 +15,7 @@ namespace AutoBattle
         public Character target;
         public bool isAlive = true;
 
-        public void Die()
+        void Die()
         {
             position = new Point(-5, -5);
         }
@@ -51,7 +51,7 @@ namespace AutoBattle
             
             if(moveDirection.x != 0 || moveDirection.y != 0)
             {
-                position += moveDirection;
+                Translate(moveDirection);
                 if (moveDirection.x < 0) Console.WriteLine($"{name} moves left");
                 else if(moveDirection.x > 0) Console.WriteLine($"{name} moves right");
                 else if (moveDirection.y > 0) Console.WriteLine($"{name} moves up");
@@ -59,24 +59,35 @@ namespace AutoBattle
             }
         }
 
-        public void Attack(Direction direction)
+        void Translate(Direction direction)
+        {
+            position += direction;
+            position.x = Math.Clamp(position.x, 0, GameInfo.width - 1);
+            position.y = Math.Clamp(position.y, 0, GameInfo.height - 1);
+        }
+
+        void Attack(Direction direction)
         {
             float initialTargetHealth = target.health;
             Console.WriteLine("In Combat");
             float attackDamage = baseDamage * damageMultiplier;
-            target.health -= attackDamage;
+            target.TakeDamage(attackDamage);
             if (TryToPush()) PushEnemy(direction);
             Console.WriteLine($"{name} attacks {target.name} and deals {initialTargetHealth - target.health} of damage!");
             Console.WriteLine($"{target.name} health: {target.health}");
-            target.isAlive = target.health > 0;   
+        }
+
+        void TakeDamage(float damage)
+        {
+            health -= damage;
+            isAlive = health > 0;
+            if (!isAlive) Die();
         }
         
         void PushEnemy(Direction direction)
         {
-            target.health -= pushDamage;
-            target.position += direction;
-            target.position.x = Math.Clamp(target.position.x, 0, GameInfo.width - 1);
-            target.position.y = Math.Clamp(target.position.y, 0, GameInfo.height - 1);
+            target.TakeDamage(pushDamage);
+            target.Translate(direction);
         }
 
         bool TryToPush()
