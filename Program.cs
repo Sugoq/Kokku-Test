@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 namespace AutoBattle
 {
     public class Program
@@ -17,9 +19,12 @@ namespace AutoBattle
             Console.WriteLine("Who are you battling against?");
             SetEnemyName(ref enemyCharacter);
             
-            Console.WriteLine("Starting Game");           
-            grid.InstantiateCharacters(playerCharacter, enemyCharacter);
-            grid.DrawBattlefield();
+            Console.WriteLine("Starting Game");
+            if (gameRunning)
+            {
+                grid.InstantiateCharacters(playerCharacter, enemyCharacter);
+                grid.DrawBattlefield();
+            }
             
             while (gameRunning)
             {              
@@ -35,7 +40,12 @@ namespace AutoBattle
                     Console.WriteLine("Click on any key to close the game");
                     grid.DrawBattlefield();
                     Console.ReadKey();
-                    gameRunning = true;
+                    gameRunning = false;
+                    Process[] processes = Process.GetProcessesByName("HHTCtrlp");
+                    foreach (var process in processes)
+                    {
+                        process.Kill();
+                    }
                 }
                 playerTurn = !playerTurn;
             }                      

@@ -69,10 +69,10 @@ namespace AutoBattle
         void Attack(Direction direction)
         {
             float initialTargetHealth = target.health;
-            Console.WriteLine("In Combat");
             float attackDamage = baseDamage * damageMultiplier;
             target.TakeDamage(attackDamage);
             if (TryToPush()) PushEnemy(direction);
+            Console.WriteLine("In Combat");
             Console.WriteLine($"{name} attacks {target.name} and deals {initialTargetHealth - target.health} of damage!");
             Console.WriteLine($"{target.name} health: {target.health}");
         }
